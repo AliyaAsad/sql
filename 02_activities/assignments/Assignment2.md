@@ -54,7 +54,7 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
 ```
-Your answer...
+We can create another table which maintains the history of customer addresses which includes a valid start_date and end_date. The table can be linked the customer details table via the customer_id field. We can call it Type 1, slowly changing dimensions (SCD 1). Type 2 which is the existing customer_details table, would ovewrite the old addresses when an update happens. Type (SCD 1) is more helpful in decision making because it provides richer data e.g. if you are looking to change store location or open up a new store you can look at customer change in residence patterns here. It would also help in analyzing customer behavior etc.
 ```
 
 ***
