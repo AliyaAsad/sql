@@ -159,7 +159,7 @@ How many customers are there (y).
 Before your final group by you should have the product of those two queries (x*y).  */
 
 SELECT vendor_name, product_name, SUM(price)
-FROM (SELECT DISTINCT vendor_name, product_name, 5 * orginal_price AS price
+FROM (SELECT DISTINCT vendor_name, product_name, 5 * original_price AS price
    FROM vendor_inventory vi
 	JOIN vendor v on v.vendor_id = vi.vendor_id
 	JOIN product p on p.product_id = vi.product_id) x
@@ -245,7 +245,7 @@ UPDATE product_units
 	SET current_quantity = ( SELECT current_quantity 
 	FROM (SELECT p.product_id, COALESCE(quantity, 0) as current_quantity 
 	FROM product_units p 
-	JOIN ( SELECT * , ROW_NUMBER() OVER( PARTITION BY vi.product_id ORDER BY market_date DESC) AS rn 
+	LEFT JOIN ( SELECT * , ROW_NUMBER() OVER( PARTITION BY vi.product_id ORDER BY market_date DESC) AS rn 
 	FROM vendor_inventory vi ) vi 
 	ON p.product_id = vi.product_id 
 	WHERE rn = 1 OR rn IS NULL ) p
